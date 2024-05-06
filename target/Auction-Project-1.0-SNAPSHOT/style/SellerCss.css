@@ -1,0 +1,50 @@
+/* Style for the information section */
+section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    position: relative; /* To make room for the image */
+}
+
+/* Style for the seller image */
+#seller-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px; /* Adjust the size as needed */
+    height: 50px;
+    border-radius: 50%; /* To make it circular */
+}
+
+/* Style for labels */
+label {
+    font-weight: bold;
+}
+
+/* Style for spans */
+span {
+    color: #333;
+}
+
+/* Style for forms */
+form {
+    margin-top: 10px;
+}
+
+/* Style for buttons */
+input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Additional margin for the second button */
+.margin_left {
+    margin-left: 10px;
+}

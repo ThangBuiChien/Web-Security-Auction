@@ -6,6 +6,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import javax.servlet.annotation.WebServlet;
+
+import auction.config.CsrfTokenManager;
+import auction.config.CsrfTokenValidator;
 import auction.data.*;
 import auction.business.*;
 import auction.data.BuyerDB;
@@ -22,8 +25,23 @@ public class UsersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
+
+
+
+
+
         
         HttpSession session = request.getSession();
+
+        String csrf = request.getParameter("csrfToken");
+        System.out.println("This is csrf token" + csrf);
+        if(csrf != null && csrf == session.getAttribute("csrfToken")){
+            System.out.println("This is valid csrf token " + csrf);
+        }
+        else{
+            System.out.println("This is invalid csrf token ");
+        }
+
 
         String url = "/index.jsp";
         
@@ -90,6 +108,10 @@ public class UsersServlet extends HttpServlet {
                     message = "Login successfully";
                     session.setAttribute("user", currentBuyer);
                     //session.setAttribute("user", currentSeller);
+
+                   // String csrfToken = csrfTokenManager.generateCsrfToken();
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+
                     url = "/index.jsp";
                     
                     
@@ -119,6 +141,17 @@ public class UsersServlet extends HttpServlet {
         else if (action.equals("createNewAccount")){
             url = "/RegisteringForm.jsp";
         }
+
+//        if (!CsrfTokenValidator.isValidCsrfToken(request)) {
+//            // Invalid CSRF token, handle accordingly (e.g., return error or redirect)
+//            System.out.println("Invalid CSRF token");
+//            return;
+//        }
+
+
+
+
+
         
         else if (action.equals("addInformation")){
             //Get imformation

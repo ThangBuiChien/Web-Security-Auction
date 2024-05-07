@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Auction-Project" options="-endorseddirs C:\Users\SE\Documents\GitHub\Auction-Project\target/endorsed" />
+      <module name="Auction-Project" options="-endorseddirs &quot;D:\SCHOLL_STUFFS\WEB Sec\Web-Security-Auction\target/endorsed&quot;" />
     </option>
   </component>
 </project>

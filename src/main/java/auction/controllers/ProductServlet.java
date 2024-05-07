@@ -30,6 +30,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*test*/
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 @WebServlet("/productServlet")
 public class ProductServlet extends HttpServlet {

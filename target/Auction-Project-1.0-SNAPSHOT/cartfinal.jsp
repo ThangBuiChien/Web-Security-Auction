@@ -4,6 +4,8 @@
     <!-- Site meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; style-src http: https: 'unsafe-inline'; img-src 'self' data: https:; connect-src http: https: ws:;">
     <title>Free Bootstrap 4 Ecommerce Template</title>
     <!-- CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">

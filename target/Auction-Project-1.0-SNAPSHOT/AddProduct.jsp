@@ -16,8 +16,6 @@
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; style-src http: https: 'unsafe-inline'; img-src 'self' data: https:; connect-src http: https: ws:;">
 
     <!-- Title Page-->
     <title>Add product</title>

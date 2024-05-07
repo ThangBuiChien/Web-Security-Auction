@@ -29,13 +29,13 @@ public class UsersServlet extends HttpServlet {
         
         // get current action
         String action = request.getParameter("action");
-        if (action == null) {
-            action = "register";  // default action
-        }
+       if (action == null) {
+           return;  // default action
+       }
         
         
-        
-        else if (action.equals("register")) { 
+
+       else if (action.equals("register")) {
             
             //Get imformation
             String newEmail = request.getParameter("email");

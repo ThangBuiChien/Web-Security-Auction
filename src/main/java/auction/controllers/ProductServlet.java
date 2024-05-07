@@ -45,7 +45,7 @@ public class ProductServlet extends HttpServlet {
         
         // get current action
         String action = request.getParameter("action");
-        if (action == null) {
+        if (!Objects.equals(action, "loadProduct")) {
             action = "loadProduct";  // default action
         }
         

@@ -29,34 +29,9 @@ public class UsersServlet extends HttpServlet {
         
         // get current action
         String action = request.getParameter("action");
-
-       if (action == null) {
-           return;  // default action
-       }
-        
-        
-
-       else if (action.equals("register")) {
-            
-            //Get imformation
-            String newEmail = request.getParameter("email");
-            String newPassword = request.getParameter("password");
-            
-            //Create new buyer with information
-            Buyer buyer = new Buyer();
-            buyer.setEmail(newEmail);
-            buyer.setPassword(newPassword);
-            
-            Seller seller = new Seller();
-            seller.setEmail(newEmail);
-            seller.setPassword(newPassword);
-            //save to database
-            String message;
-            if (BuyerDB.emailExists(newEmail)) {
-                message = "This email address already exists.<br>" +
-                          "Please enter another email address.";
-                url = "/RegisteringForm.jsp";
-
+        if (action == null) {
+            action = "register";  // default action
+        }
 
         /*try catch for Application Error Disclosure*/
         try {

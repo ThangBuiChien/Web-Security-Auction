@@ -24,14 +24,16 @@
         </div>
     </div>
     <form action="userLogin" method="post">
-      <div class="main">
+        <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
                <form>
                   <div class="form-group">
                       <a href="AddProduct.jsp"></a>
-                     <label>User Name</label>
-                     <input type="hidden" name="action" value="login"> 
+                      <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
+                      <label>User Name</label>
+                      <input type="hidden" name="action" value="login">
                      <input type="text" class="form-control" name="email" placeholder="User Name">
                   </div> 
                   <div class="form-group">

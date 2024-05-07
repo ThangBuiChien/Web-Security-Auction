@@ -1,15 +1,5 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-Built-By: SE
-Build-Jdk: 21.0.2
-=======
 Built-By: ADMIN
 Build-Jdk: Oracle OpenJDK version 21.0.1
->>>>>>> Stashed changes
-=======
-Built-By: memo
-Build-Jdk: 21.0.3
->>>>>>> main
 

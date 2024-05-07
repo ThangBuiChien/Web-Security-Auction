@@ -54,7 +54,7 @@ public class ProductServlet extends HttpServlet {
             action = "loadProduct";  // default action
         }
         
-        
+        /*try catch for Application Error Disclosure*/
         try {
             if (action.equals("loadProduct")) {
                 List<Product> loadProduct = ProductDB.selectBiddingProducts();
@@ -358,6 +358,7 @@ public class ProductServlet extends HttpServlet {
 
                 url = "/receipt.jsp";
             }
+        /*this is the fix part for the Application Error Disclosure by adding the try catch with a simple error message*/
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging
             String errorMessage = "An error occurred. Please try again later.";

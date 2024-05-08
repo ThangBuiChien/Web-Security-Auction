@@ -23,49 +23,50 @@
             <p><i>${message}</i></p>
         </div>
     </div>
+<%--    <form action="userLogin" method="post">--%>
+<%--        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">--%>
+<%--      <div class="main">--%>
+<%--         <div class="col-md-6 col-sm-12">--%>
+<%--            <div class="login-form">--%>
+<%--               <form>--%>
+<%--                   <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">--%>
+<%--                  <div class="form-group">--%>
+<%--                     <label>User Name</label>--%>
+<%--                     <input type="hidden" name="action" value="register">  --%>
+<%--                     <input type="text" class="form-control" name="email" value=${user.email} >--%>
+<%--                  </div> --%>
+<%--                  <div class="form-group">--%>
+<%--                     <label>Password</label>--%>
+<%--                     <input type="password" class="form-control" name="password" value=${user.Password} >--%>
+<%--                  </div>--%>
+<%--                  <button type="submit" value="Join Now" class="btn btn-black">Join Now</button>   --%>
+<%--               </form>--%>
+<%--  --%>
+<%--            </div>--%>
+<%--         </div>--%>
+<%--      </div>--%>
+<%--   </form>--%>
+
     <form action="userLogin" method="post">
         <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
-      <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-               <form>
-                   <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
-                  <div class="form-group">
-                     <label>User Name</label>
-                     <input type="hidden" name="action" value="register">  
-                     <input type="text" class="form-control" name="email" value=${user.email} >
-                  </div> 
-                  <div class="form-group">
-                     <label>Password</label>
-                     <input type="password" class="form-control" name="password" value=${user.Password} >
-                  </div>
-                  <button type="submit" value="Join Now" class="btn btn-black">Join Now</button>   
-               </form>
-  
+        <div class="main">
+            <div class="col-md-6 col-sm-12">
+                <div class="login-form">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="hidden" name="action" value="register">
+                        <input type="text" class="form-control" name="email" value="${user.email}">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" value="${user.Password}">
+                    </div>
+                    <button type="submit" value="Join Now" class="btn btn-black">Join Now</button>
+                </div>
             </div>
-         </div>
-      </div>
-   </form>
+        </div>
+    </form>
 
-<%--    <form action="userLogin" method="post">--%>
-<%--        <div class="main">--%>
-<%--            <div class="col-md-6 col-sm-12">--%>
-<%--                <div class="login-form">--%>
-<%--                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>User Name</label>--%>
-<%--                        <input type="hidden" name="action" value="register">--%>
-<%--                        <input type="text" class="form-control" name="email" value="${user.email}">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Password</label>--%>
-<%--                        <input type="password" class="form-control" name="password">--%>
-<%--                    </div>--%>
-<%--                    <button type="submit" class="btn btn-black">Join Now</button>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </form>--%>
 
 
 

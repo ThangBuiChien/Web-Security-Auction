@@ -50,6 +50,7 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
+                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control" placeholder="Search...">
                     <div class="input-group-append">
@@ -69,6 +70,7 @@
               </form>
 
                 <form action="userLogin" method="loadNofi">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                    <input type="hidden" name="action" value="loadNofi"> 
                    <div class="btn btn-success btn-sm ml-3" onclick="toggleNotifi()">
                             <i class="fa-solid fa-bell"></i>
@@ -111,17 +113,20 @@
     
 
     <form action="userLogin" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
         <input type="hidden" name="action" value="Change">        
         
         <input type="submit" value="Change Info" class="margin_left">
     </form>
     
     <form action="productServlet" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
         <input type="hidden" name="action" value="Addproduct">        
         
         <input type="submit" value="Add product" class="margin_left">
     </form>
     <form action="productServlet" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
         <input type="hidden" name="action" value="loadProductByUser">        
         
         <input type="submit" value="Winning Product" class="margin_left">

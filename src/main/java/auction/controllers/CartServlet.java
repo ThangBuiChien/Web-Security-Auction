@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import auction.business.Buyer;
 import auction.business.Cart;
 import auction.business.Product;
+import auction.config.CsrfTokenManager;
 import auction.data.CartDB;
 //import auction.data.CartDB;
 import auction.data.ProductDB;
@@ -40,6 +41,14 @@ public class CartServlet extends HttpServlet {
 
         try {
             if (action.equals("addcart")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
                 Buyer currentBuyer = (Buyer) session.getAttribute("buyer");
 
                 // Retrieve product code from the request parameters
@@ -76,9 +85,19 @@ public class CartServlet extends HttpServlet {
                 }
 
             } else if (action.equals("deletecart")) {
+
                 String productCode = request.getParameter("productCode");
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
 
                 if (productCode != null && !productCode.isEmpty()) {
+
                     Cart cart = (Cart) session.getAttribute("cart");
                     int currentProductID = Integer.parseInt(productCode);
                     cart.removeItem(currentProductID);
@@ -87,6 +106,15 @@ public class CartServlet extends HttpServlet {
                     url = "/cartfinal.jsp";
                 }
             } else if (action.equals("loadCart")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
+
                 Buyer currentUser = (Buyer) session.getAttribute("user");
                 Cart currentCart = CartDB.selectCart(currentUser);
                 request.setAttribute("cart", currentCart);
@@ -94,6 +122,14 @@ public class CartServlet extends HttpServlet {
                 url = "/cartfinal.jsp";
 
             } else if (action.equals("shop")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    return;
+                }
 
                 url = "/finalproduct.jsp";
 

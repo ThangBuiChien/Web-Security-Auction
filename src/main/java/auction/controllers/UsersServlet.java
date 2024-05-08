@@ -186,6 +186,15 @@ public class UsersServlet extends HttpServlet {
                 url = "/ChangInfoUser.jsp";
             } else if (action.equals("ChangeInfo")) {
 
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    return;
+                }
+
                 String firstName = request.getParameter("firstName");
                 String lastName = request.getParameter("lastName");
                 String companyName = request.getParameter("companyName");
@@ -212,6 +221,14 @@ public class UsersServlet extends HttpServlet {
                 url = "/SellerForm.jsp";
             } else if (action.equals("loadNofi")) {
                 try {
+                    String csrf = request.getParameter("csrfToken");
+                    System.out.println("This is csrf token" + csrf);
+                    if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                        System.out.println("This is valid csrf token " + csrf);
+                    }
+                    else{
+                        return;
+                    }
                     Buyer currentUser = (Buyer) session.getAttribute("user");
                     String email = currentUser.getEmail();
                     System.out.println("This is email from load Nofi" + email);
@@ -230,6 +247,14 @@ public class UsersServlet extends HttpServlet {
                 }
 
             } else if (action.equals("contact")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                   return;
+                }
 
                 // Catch any exceptions and print the stack trace
                 String mess = "You will be receive our email soon!";

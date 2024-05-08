@@ -52,10 +52,19 @@ public class ProductServlet extends HttpServlet {
         if (action == null) {
             action = "loadProduct";  // default action
         }
+
         
         
         try {
             if (action.equals("loadProduct")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
                 List<Product> loadProduct = ProductDB.selectBiddingProducts();
 
                 request.setAttribute("product", loadProduct);
@@ -69,9 +78,17 @@ public class ProductServlet extends HttpServlet {
                 //Announce succesfull and send to login.jsp
 
             } else if (action.equals("loadProductByName")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
                 String name = request.getParameter("productNameSearch");
 
-                System.out.println("Naem serch: " + name);
+                System.out.println("Name serch: " + name);
 
 
                 List<Product> loadProduct = ProductDB.selectProductsByName(name);
@@ -89,6 +106,14 @@ public class ProductServlet extends HttpServlet {
                 //Announce succesfull and send to login.jsp
 
             } else if (action.equals("loadProductByUser")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
                 Buyer currentUser = (Buyer) session.getAttribute("buyer");
 
                 List<Product> loadProduct = ProductDB.selectWinningProductsByUser(currentUser);
@@ -106,7 +131,7 @@ public class ProductServlet extends HttpServlet {
                     System.out.println("This is valid csrf token " + csrf);
                 }
                 else{
-                    return;
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
                 }
                 Product newProduct = new Product();
                 String productName = request.getParameter("productName");
@@ -251,6 +276,14 @@ public class ProductServlet extends HttpServlet {
 
 
             } else if (action.equals("setBidPrice")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
                 String strId = request.getParameter("productID");
                 long id = Long.parseLong(strId);
 

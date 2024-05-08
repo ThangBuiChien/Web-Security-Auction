@@ -16,10 +16,15 @@ import auction.data.CartDB;
 //import auction.data.CartDB;
 import auction.data.ProductDB;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
+
+    private static final Logger logger = Logger.getLogger(ProductServlet.class.getName());
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,14 +38,15 @@ public class CartServlet extends HttpServlet {
             action = "addcart"; // default action
         }
 
-        if (action.equals("addcart")) {
-            Buyer currentBuyer = (Buyer) session.getAttribute("buyer");
-            
-            // Retrieve product code from the request parameters
-            String productCode = request.getParameter("productCode");
+        try {
+            if (action.equals("addcart")) {
+                Buyer currentBuyer = (Buyer) session.getAttribute("buyer");
 
-            if (productCode != null && !productCode.isEmpty()) {
-                
+                // Retrieve product code from the request parameters
+                String productCode = request.getParameter("productCode");
+
+                if (productCode != null && !productCode.isEmpty()) {
+
                     // Convert product code to int
                     int currentProductID = Integer.parseInt(productCode);
 
@@ -51,52 +57,57 @@ public class CartServlet extends HttpServlet {
                         //Cart cart = (Cart) session.getAttribute("cart");
                         Cart cart = CartDB.selectCart(currentBuyer);
 
-//                        if (cart == null) {
-//                            cart = new Cart();
-//                            cart.setBuyer(currentBuyer);
-//                            CartDB.insert(cart);
-//                        }
-                        
-                            cart.addItem(currentProduct);
-                            
-                            CartDB.update(cart);
-                            
-                            session.setAttribute("cart", cart);
-                        
-                            url = "/cartfinal.jsp";
-                          
-                         
+                        //                        if (cart == null) {
+                        //                            cart = new Cart();
+                        //                            cart.setBuyer(currentBuyer);
+                        //                            CartDB.insert(cart);
+                        //                        }
+
+                        cart.addItem(currentProduct);
+
+                        CartDB.update(cart);
+
+                        session.setAttribute("cart", cart);
+
+                        url = "/cartfinal.jsp";
+
+
                     }
-            } 
-        
-        }
-        else if (action.equals("deletecart")) {
-            String productCode = request.getParameter("productCode");
-            
-            if (productCode != null && !productCode.isEmpty()) {
-                Cart cart = (Cart) session.getAttribute("cart");
-                int currentProductID = Integer.parseInt(productCode);
-                cart.removeItem(currentProductID);
-                CartDB.update(cart);
-                session.setAttribute("cart", cart);
+                }
+
+            } else if (action.equals("deletecart")) {
+                String productCode = request.getParameter("productCode");
+
+                if (productCode != null && !productCode.isEmpty()) {
+                    Cart cart = (Cart) session.getAttribute("cart");
+                    int currentProductID = Integer.parseInt(productCode);
+                    cart.removeItem(currentProductID);
+                    CartDB.update(cart);
+                    session.setAttribute("cart", cart);
+                    url = "/cartfinal.jsp";
+                }
+            } else if (action.equals("loadCart")) {
+                Buyer currentUser = (Buyer) session.getAttribute("user");
+                Cart currentCart = CartDB.selectCart(currentUser);
+                request.setAttribute("cart", currentCart);
+
                 url = "/cartfinal.jsp";
+
+            } else if (action.equals("shop")) {
+
+                url = "/finalproduct.jsp";
+
+            } else {
+                // Invalid action provided
+                throw new IllegalArgumentException("Invalid action: " + action);
             }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "An error occurred while processing the request", e);
+            String errorMessage = "An error occurred. Please try again later.";
+            request.setAttribute("errorMessage", errorMessage);
+            url = "/error.jsp"; // Redirect to error page
         }
-        
-        else if (action.equals ("loadCart")){
-            Buyer currentUser = (Buyer)session.getAttribute("user");
-            Cart currentCart = CartDB.selectCart(currentUser);
-            request.setAttribute("cart", currentCart);
-            
-            url = "/cartfinal.jsp";
-            
-        }
-        else if (action.equals ("shop")){
-            
-            url = "/finalproduct.jsp";
-            
-        }
-        getServletContext().getRequestDispatcher(url).forward(request, response);
+            getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 
     @Override

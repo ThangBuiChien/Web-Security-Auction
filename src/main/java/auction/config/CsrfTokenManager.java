@@ -1,6 +1,7 @@
 package auction.config;
 
 import java.security.SecureRandom;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,10 +9,8 @@ public class CsrfTokenManager {
     public static final String CSRF_TOKEN_SESSION_ATTR_NAME = "csrfToken";
 
     public static String generateCsrfToken() {
-        SecureRandom random = new SecureRandom();
-        byte[] token = new byte[16];
-        random.nextBytes(token);
-        return new String(token);
+        String csrfToken = UUID.randomUUID().toString();
+        return new String(csrfToken);
     }
 
     public static void setCsrfToken(HttpServletRequest request) {

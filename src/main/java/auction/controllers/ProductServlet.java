@@ -45,13 +45,16 @@ public class ProductServlet extends HttpServlet {
         
         // get current action
         String action = request.getParameter("action");
-        if (!Objects.equals(action, "loadProduct")) {
-            return;  // default action
+//        if (!Objects.equals(action, "loadProduct")) {
+//            return;  // default action
+//        }
+        if (action==null){
+            return;
         }
         
         
         
-        if (action.equals("loadProduct")) { 
+        else if (action.equals("loadProduct")) {
             List<Product> loadProduct = ProductDB.selectBiddingProducts();
             
             request.setAttribute("product", loadProduct);
@@ -104,6 +107,14 @@ public class ProductServlet extends HttpServlet {
         }
 
         else if (action.equals("addProduct")){
+            String csrf = request.getParameter("csrfToken");
+            System.out.println("This is csrf token" + csrf);
+            if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                System.out.println("This is valid csrf token " + csrf);
+            }
+            else{
+                return;
+            }
             Product newProduct = new Product();
             String productName = request.getParameter("productName");
             String tag = request.getParameter("tag");

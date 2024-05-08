@@ -24,12 +24,14 @@
         </div>
     </div>
     <form action="userLogin" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
                <form>
                   <div class="form-group">
                      <label>User Name</label>
+                      <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                      <input type="hidden" name="action" value="register">  
                      <input type="text" class="form-control" name="email" value=${user.email} >
                   </div> 

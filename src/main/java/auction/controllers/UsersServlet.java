@@ -33,20 +33,14 @@ public class UsersServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
 
-        String csrf = request.getParameter("csrfToken");
-        System.out.println("This is csrf token" + csrf);
-        if(csrf != null && csrf == session.getAttribute("csrfToken")){
-            System.out.println("This is valid csrf token " + csrf);
-        }
-        else{
-            System.out.println("This is invalid csrf token ");
-        }
+
 
 
         String url = "/index.jsp";
         
         // get current action
         String action = request.getParameter("action");
+
        if (action == null) {
            return;  // default action
        }
@@ -54,13 +48,23 @@ public class UsersServlet extends HttpServlet {
         
 
        else if (action.equals("register")) {
-            
+
+           String csrf = request.getParameter("csrfToken");
+           System.out.println("This is csrf token" + csrf);
+           if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+               System.out.println("This is valid csrf token " + csrf);
+           }
+           else{
+               session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+           }
+
             //Get imformation
             String newEmail = request.getParameter("email");
             String newPassword = request.getParameter("password");
             
             //Create new buyer with information
             Buyer buyer = new Buyer();
+           session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
             buyer.setEmail(newEmail);
             buyer.setPassword(newPassword);
             
@@ -77,20 +81,31 @@ public class UsersServlet extends HttpServlet {
             }
             else {
                 message = "Create new account succesfully, please login in";
+
                 BuyerDB.insert(buyer);
                 SellerDB.insert(seller);
                  url = "/LoginForm.jsp";
             }
-            
-            
+
+
             //Announce succesfull and send to login.jsp
             request.setAttribute("message", message);
             
         }
         else if (action.equals("login")){
+
+           String csrf = request.getParameter("csrfToken");
+           System.out.println("This is csrf token" + csrf);
+           if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+               System.out.println("This is valid csrf token " + csrf);
+           }
+           else{
+               session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+           }
             String currentEmail = request.getParameter("email");
             String currentPassword = request.getParameter("password");
-            
+
+
             String message="";
             if(BuyerDB.checkPassword(currentEmail, currentPassword)){
                 
@@ -105,12 +120,10 @@ public class UsersServlet extends HttpServlet {
                 session.setAttribute("seller", currentSeller);
                 //Load to main page 
                 if("activate".equals(currentBuyer.getAccountStatus())){
+
                     message = "Login successfully";
                     session.setAttribute("user", currentBuyer);
-                    //session.setAttribute("user", currentSeller);
 
-                   // String csrfToken = csrfTokenManager.generateCsrfToken();
-                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
 
                     url = "/index.jsp";
                     
@@ -118,6 +131,7 @@ public class UsersServlet extends HttpServlet {
                     
                 }
                 else{
+
                     url = "/AddInfoUserForm.jsp";
                 }
                 
@@ -130,6 +144,7 @@ public class UsersServlet extends HttpServlet {
                 }
             
             request.setAttribute("message", message);
+
             
         }
         
@@ -142,62 +157,74 @@ public class UsersServlet extends HttpServlet {
             url = "/RegisteringForm.jsp";
         }
 
-//        if (!CsrfTokenValidator.isValidCsrfToken(request)) {
-//            // Invalid CSRF token, handle accordingly (e.g., return error or redirect)
-//            System.out.println("Invalid CSRF token");
-//            return;
-//        }
 
 
 
 
 
-        
-        else if (action.equals("addInformation")){
-            //Get imformation
-            String firstName = request.getParameter("firstName");
-            String lastName = request.getParameter("lastName");
-            String address = request.getParameter("address");
-            String debitCardInfo = request.getParameter("debitCardInfo");
-            
-            //get the current buyer
-            Buyer currentBuyer = (Buyer) session.getAttribute("buyer");
-            Seller currentSeller = (Seller) session.getAttribute("seller");
-            //Add new value
-            currentBuyer.setFirstName(firstName);
-            currentBuyer.setLastName(lastName);
-            currentBuyer.setAddress(address);
-            currentBuyer.setDebitCardInfo(debitCardInfo);
-            currentBuyer.setAccountStatus("activate");
-            
-            currentSeller.setFirstName(firstName);
-            currentSeller.setLastName(lastName);
-            currentSeller.setCompanyName(address);
-            currentSeller.setPhoneNumber(debitCardInfo);
-            currentSeller.setAccountStatus("activate");
-            //Store to DB
-            BuyerDB.update(currentBuyer);
-            SellerDB.update(currentSeller);
-            
-            //add cart to usesr
-            Cart newCart = new Cart();
-            newCart.setBuyer(currentBuyer);
-            CartDB.insert(newCart);
-            
-            session.setAttribute("cart", newCart);
-            
-            //
-            String message = "Update succesfully!";
-            request.setAttribute("message", message);
-            
-            url = "/LoginForm.jsp";
-        
-        }
-        else if (action.equals("Change")){
+
+
+       else if (action.equals("addInformation")) {
+           // Validate CSRF token
+           String csrf = request.getParameter("csrfToken");
+           System.out.println("This is csrf token" + csrf);
+           if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+               System.out.println("This is valid csrf token " + csrf);
+           }
+           else{
+               return;
+           }
+
+           // Get information
+           String firstName = request.getParameter("firstName");
+           String lastName = request.getParameter("lastName");
+           String address = request.getParameter("address");
+           String debitCardInfo = request.getParameter("debitCardInfo");
+
+           // Get the current buyer
+           Buyer currentBuyer = (Buyer) session.getAttribute("buyer");
+           Seller currentSeller = (Seller) session.getAttribute("seller");
+           if (currentBuyer == null || currentSeller == null) {
+               // Handle error, maybe redirect to an error page
+               return;
+           }
+
+           // Add new values
+           currentBuyer.setFirstName(firstName);
+           currentBuyer.setLastName(lastName);
+           currentBuyer.setAddress(address);
+           currentBuyer.setDebitCardInfo(debitCardInfo);
+           currentBuyer.setAccountStatus("activate");
+
+           currentSeller.setFirstName(firstName);
+           currentSeller.setLastName(lastName);
+           currentSeller.setCompanyName(address);
+           currentSeller.setPhoneNumber(debitCardInfo);
+           currentSeller.setAccountStatus("activate");
+
+           // Store to DB
+           BuyerDB.update(currentBuyer);
+           SellerDB.update(currentSeller);
+
+           // Add cart to user
+           Cart newCart = new Cart();
+           newCart.setBuyer(currentBuyer);
+           CartDB.insert(newCart);
+
+           session.setAttribute("cart", newCart);
+           session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+
+           String message = "Update successfully!";
+           request.setAttribute("message", message);
+           url = "/LoginForm.jsp";
+       }
+
+       else if (action.equals("Change")){
             url = "/ChangInfoUser.jsp";
         } 
         else if (action.equals("ChangeInfo")){
-            
+
+
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String companyName = request.getParameter("companyName");

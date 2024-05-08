@@ -43,6 +43,7 @@
                 </div>
                 <div class="card-body">
                     <form action="userLogin" method="post">
+                        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                         <input type="hidden" name="action" value="addInformation">
                         <div class="form-row">
                             <div class="name">Email</div>

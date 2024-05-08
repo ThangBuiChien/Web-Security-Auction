@@ -24,13 +24,15 @@
         </div>
     </div>
     <form action="userLogin" method="post">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
         <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
                <form>
+                   <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                   <div class="form-group">
                       <a href="AddProduct.jsp"></a>
-                      <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+
 
                       <label>User Name</label>
                       <input type="hidden" name="action" value="login">
@@ -44,6 +46,7 @@
                </form>
                 <div class="form-group">
                    <form action="userLogin" method="post">
+                       <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                          <input type="hidden" name="action" value="createNewAccount">        
                          <button type="submit" class="btn btn-secondary">Register</button>
                     </form>

@@ -145,6 +145,7 @@
                             <td>
                                 <form action="productServlet" method="post">
                                     <input type="hidden" name="action" value="setBidPrice">
+                                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
 
                                     <input type="hidden" name="productID" value="<c:out value='${item.ID}'/>">
                                     <input type=text name="newBidPrice" placeholder="Enter your bid here"

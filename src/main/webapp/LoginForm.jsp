@@ -23,7 +23,7 @@
             <p><i>${message}</i></p>
         </div>
     </div>
-    <form action="userLogin" method="post">
+    <!--<form action="userLogin" method="post">
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
@@ -49,8 +49,34 @@
             </div>
          </div>
       </div>
-   </form>
- 
-        
-         
+   </form>-->
+
+    <form action="userLogin" method="post">
+        <div class="main">
+            <div class="col-md-6 col-sm-12">
+                <div class="login-form">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="hidden" name="action" value="login">
+                        <input type="text" class="form-control" name="email" placeholder="User Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-black">Login</button>
+                </div>
+                <div class="form-group">
+                    <form action="userLogin" method="post">
+                        <input type="hidden" name="action" value="createNewAccount">
+                        <button type="submit" class="btn btn-secondary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
 </html>

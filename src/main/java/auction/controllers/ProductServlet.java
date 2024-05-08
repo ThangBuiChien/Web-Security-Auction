@@ -45,8 +45,11 @@ public class ProductServlet extends HttpServlet {
         
         // get current action
         String action = request.getParameter("action");
-        if (!Objects.equals(action, "loadProduct")) {
-            return;  // default action
+        if (!Objects.equals(action, "loadProduct") | action ==null ) {
+            //response.sendRedirect(request.getContextPath() + "/error.jsp");
+            //return;
+            action.equals("loadProduct");
+            // default action
         }
         
         
@@ -67,7 +70,7 @@ public class ProductServlet extends HttpServlet {
             
         }
         
-        else if (action.equals("loadProductByName")) { 
+        else if (action.equals("loadProductByName")) {
             String name = request.getParameter("productNameSearch");
             
             System.out.println("Naem serch: " + name);

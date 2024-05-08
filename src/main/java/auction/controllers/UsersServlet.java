@@ -30,12 +30,11 @@ public class UsersServlet extends HttpServlet {
         // get current action
         String action = request.getParameter("action");
        if (action == null) {
-           return;  // default action
+           //response.sendRedirect(request.getContextPath() + "/error.jsp");
+           action.equals("register");  // default action
        }
-        
-        
 
-       else if (action.equals("register")) {
+       if (action.equals("register")) {
             
             //Get imformation
             String newEmail = request.getParameter("email");

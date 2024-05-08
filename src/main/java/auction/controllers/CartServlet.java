@@ -30,8 +30,9 @@ public class CartServlet extends HttpServlet {
         // get current action
         String action = request.getParameter("action");
         if (action == null) {
-            action = "addcart"; // default action
+           action.equals("addCart");// default action
         }
+
 
         if (action.equals("addcart")) {
             Buyer currentBuyer = (Buyer) session.getAttribute("buyer");

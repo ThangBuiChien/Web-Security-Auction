@@ -23,58 +23,63 @@
             <p><i>${message}</i></p>
         </div>
     </div>
-    <!--<form action="userLogin" method="post">
+    <<form action="userLogin" method="post">
+    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
                <form>
+                   <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                   <div class="form-group">
                       <a href="AddProduct.jsp"></a>
                      <label>User Name</label>
-                     <input type="hidden" name="action" value="login"> 
+                     <input type="hidden" name="action" value="login">
                      <input type="text" class="form-control" name="email" placeholder="User Name">
-                  </div> 
+                  </div>
                   <div class="form-group">
                      <label>Password</label>
                      <input type="password" class="form-control" name="password" placeholder="Password">
                   </div>
-                  <button type="submit" value="Login" class="btn btn-black">Login</button>   
+                  <button type="submit" value="Login" class="btn btn-black">Login</button>
                </form>
                 <div class="form-group">
                    <form action="userLogin" method="post">
-                         <input type="hidden" name="action" value="createNewAccount">        
+                       <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+                         <input type="hidden" name="action" value="createNewAccount">
                          <button type="submit" class="btn btn-secondary">Register</button>
                     </form>
                 </div>
             </div>
          </div>
       </div>
-   </form>-->
+   </form>
 
-    <form action="userLogin" method="post">
-        <div class="main">
-            <div class="col-md-6 col-sm-12">
-                <div class="login-form">
-                    <div class="form-group">
-                        <label>User Name</label>
-                        <input type="hidden" name="action" value="login">
-                        <input type="text" class="form-control" name="email" placeholder="User Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-black">Login</button>
-                </div>
-                <div class="form-group">
-                    <form action="userLogin" method="post">
-                        <input type="hidden" name="action" value="createNewAccount">
-                        <button type="submit" class="btn btn-secondary">Register</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </form>
+<%--    <form action="userLogin" method="post">--%>
+<%--        <div class="main">--%>
+<%--            <div class="col-md-6 col-sm-12">--%>
+<%--                <div class="login-form">--%>
+<%--&lt;%&ndash;                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">&ndash;%&gt;--%>
+<%--                    <div class="form-group">--%>
+<%--                        <label>User Name</label>--%>
+<%--                        <input type="hidden" name="action" value="login">--%>
+<%--                        <input type="text" class="form-control" name="email" placeholder="User Name">--%>
+<%--                    </div>--%>
+<%--                    <div class="form-group">--%>
+<%--                        <label>Password</label>--%>
+<%--                        <input type="password" class="form-control" name="password" placeholder="Password">--%>
+<%--                    </div>--%>
+<%--                    <button type="submit" class="btn btn-black">Login</button>--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <form action="userLogin" method="post">--%>
+<%--                        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">--%>
+<%--                        <input type="hidden" name="action" value="createNewAccount">--%>
+<%--                        <button type="submit" class="btn btn-secondary">Register</button>--%>
+<%--                    </form>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </form>--%>
 
 
 

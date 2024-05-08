@@ -16,6 +16,9 @@ import auction.business.Cart;
 import auction.business.Notification;
 import auction.data.CartDB;
 import auction.data.NotiDB;
+
+import auction.config.CsrfTokenManager;
+import auction.config.CsrfTokenValidator;
  
 @WebServlet("/userLogin")
 public class UsersServlet extends HttpServlet {
@@ -34,16 +37,28 @@ public class UsersServlet extends HttpServlet {
         // get current action
         String action = request.getParameter("action");
         if (action == null) {
-            action = "register";  // default action
+            return;  // default action
         }
         
         
         try {
             if (action.equals("register")) {
 
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
+
+
                 //Get imformation
                 String newEmail = request.getParameter("email");
                 String newPassword = request.getParameter("password");
+
+                session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
 
                 //Create new buyer with information
                 Buyer buyer = new Buyer();
@@ -72,6 +87,14 @@ public class UsersServlet extends HttpServlet {
                 request.setAttribute("message", message);
 
             } else if (action.equals("login")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
+                }
                 String currentEmail = request.getParameter("email");
                 String currentPassword = request.getParameter("password");
 
@@ -107,10 +130,20 @@ public class UsersServlet extends HttpServlet {
 
             } else if (action.equals("logOut")) {
                 session.removeAttribute("user");
+                session.removeAttribute("csrfToken");
                 url = "/LoginForm.jsp";
             } else if (action.equals("createNewAccount")) {
                 url = "/RegisteringForm.jsp";
             } else if (action.equals("addInformation")) {
+                // Validate CSRF token
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    return;
+                }
                 //Get imformation
                 String firstName = request.getParameter("firstName");
                 String lastName = request.getParameter("lastName");

@@ -6,6 +6,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import javax.servlet.annotation.WebServlet;
+
+import auction.config.CsrfTokenManager;
 import auction.data.ProductDB;
 import auction.data.NotiDB;
 
@@ -98,6 +100,14 @@ public class ProductServlet extends HttpServlet {
 
 
             } else if (action.equals("addProduct")) {
+                String csrf = request.getParameter("csrfToken");
+                System.out.println("This is csrf token" + csrf);
+                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                    System.out.println("This is valid csrf token " + csrf);
+                }
+                else{
+                    return;
+                }
                 Product newProduct = new Product();
                 String productName = request.getParameter("productName");
                 String tag = request.getParameter("tag");

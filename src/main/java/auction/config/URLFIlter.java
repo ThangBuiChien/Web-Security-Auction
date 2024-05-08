@@ -33,7 +33,7 @@ public class URLFIlter implements Filter {
         if (isSQLInjectionAttempt(request) || hasBannedCharacters(request)) {
             // Block the request and return an error response or redirect to a safe page
             //response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
-            response.sendRedirect(request.getContextPath() + "/bannedChars.jsp");
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
             return;
              // Stop further processing
         }filterChain.doFilter(servletRequest, servletResponse);

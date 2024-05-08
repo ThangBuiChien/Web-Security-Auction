@@ -68,6 +68,7 @@
 
 
             <form class="form-inline my-2 my-lg-0">
+                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control" placeholder="Search...">
                     <div class="input-group-append">
@@ -87,6 +88,7 @@
               </form>
 
                 <form action="userLogin" method="POST">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                    <input type="hidden" name="action" value="loadNofi"> 
                    <div class="btn btn-success btn-sm ml-3" onclick="toggleNotifi()">
                             <i class="fa-solid fa-bell"></i>
@@ -396,8 +398,8 @@
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>

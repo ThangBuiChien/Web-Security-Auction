@@ -4,7 +4,7 @@
     <!-- Site meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Free Bootstrap 4 Ecommerce Template</title>
+    <title>Cart</title>
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -42,6 +42,7 @@
             </ul>
 
 <form class="form-inline my-2 my-lg-0">
+    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control" placeholder="Search...">
                     <div class="input-group-append">
@@ -61,6 +62,7 @@
               </form>
 
                 <form action="userLogin" method="loadNofi">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                    <input type="hidden" name="action" value="loadNofi"> 
                    <div class="btn btn-success btn-sm ml-3" onclick="toggleNotifi()">
                             <i class="fa-solid fa-bell"></i>
@@ -153,6 +155,7 @@
 
                             <td>
                                 <form action="cart" method="post">
+                                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                                     <input type="hidden" name="action" value="deletecart">
                                     <input type="hidden" name="productCode" value="<c:out value='${item.ID}'/>">
                                      <button type="submit" name="action" style="background: none; border: none; padding: 0; cursor: pointer;">
@@ -167,25 +170,26 @@
                 </table>
             </div>
         </div>
-        <div class="col mb-2">
-            <div class="row">
-                
-                <div class="col-sm-12 col-md-6 text-right">
-                    <form action="cart" method="post">
-                    <input type="hidden" name="action" value="shop">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Continue Shopping</button>
-                </div>
-            </div>
-        </div>
+<%--        <div class="col mb-2">--%>
+<%--            <div class="row">--%>
+<%--                --%>
+<%--                <div class="col-sm-12 col-md-6 text-right">--%>
+<%--                    <form action="cart" method="post">--%>
+<%--                        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">--%>
+<%--                    <input type="hidden" name="action" value="shop">--%>
+<%--                    <button class="btn btn-lg btn-block btn-success text-uppercase">Continue Shopping</button>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
 </div>
 
 
 
 <!-- JS -->
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js" type="text/javascript"></script>
+<script src="//code.jquery.com/jquery-3.6.4.slim.min.js" type="text/javascript"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" type="text/javascript"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

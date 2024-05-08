@@ -35,6 +35,7 @@
                     <a class="nav-link" href="./productServlet?action=loadProduct" >Product</a>
                 </li>
                 <li class="nav-item">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                     <a class="nav-link" href="./cart?action=loadCart">Cart</a>
                 </li>
                 <li class="nav-item">
@@ -43,6 +44,7 @@
             </ul>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             <form class="form-inline my-2 my-lg-0">
+                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control" placeholder="Search...">
                     <div class="input-group-append">
@@ -62,6 +64,7 @@
               </form>
 
                 <form action="userLogin" method="loadNofi">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                    <input type="hidden" name="action" value="loadNofi"> 
                    <div class="btn btn-success btn-sm ml-3" onclick="toggleNotifi()">
                             <i class="fa-solid fa-bell"></i>
@@ -124,6 +127,7 @@
                         </div>             
                         <div class="mx-auto">
                         <form action="userLogin" method="GET">
+                            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                             <input type="hidden" name="action" value="contact"> 
                             <button type="submit" class="btn btn-primary text-right">Send</button>
                         </form>

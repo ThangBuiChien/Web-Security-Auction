@@ -44,6 +44,7 @@
                 </div>
                 <div class="card-body">
                     <form action="productServlet" method="post">
+                        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                         <input type="hidden" name="action" value="addProduct">
                         <div class="form-row">
                             <div class="name">Product Name</div>

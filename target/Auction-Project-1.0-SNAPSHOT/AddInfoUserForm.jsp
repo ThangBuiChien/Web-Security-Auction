@@ -5,7 +5,37 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page import="java.util.Base64" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.security.NoSuchAlgorithmException" %>
+
+<%
+    // Generate nonce
+    byte[] nonceBytes = new byte[16];
+    try {
+        SecureRandom.getInstanceStrong().nextBytes(nonceBytes);
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+    String nonce = Base64.getEncoder().encodeToString(nonceBytes);
+
+    // Define CSP with nonce and allowlist for CDNs
+    String cspString = "default-src 'self'; " +
+            "script-src 'self' 'nonce-" + nonce + "' https://code.jquery.com https://cdn.jsdelivr.net; " +
+            "style-src 'self' 'nonce-" + nonce + "' https://cdn.jsdelivr.net https://fonts.googleapis.com; " +
+            "img-src 'self'; " +
+            "frame-ancestors 'self'; " +
+            "form-action 'self';";
+    response.setHeader("Content-Security-Policy", cspString);
+    response.setHeader("X-Frame-Options", "SAMEORIGIN");
+%>
+
+<style nonce="<%= nonce %>">
+</style>
+
+<script nonce="<%= nonce %>">
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,17 +51,17 @@
     <title>Add Your Infomation</title>
 
     <!-- Icons font CSS-->
-    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all" nonce="<%= nonce %>">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all" nonce="<%= nonce %>">
     <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet" nonce="<%= nonce %>">
 
     <!-- Vendor CSS-->
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all" nonce="<%= nonce %>">
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all" nonce="<%= nonce %>">
 
     <!-- Main CSS-->
-    <link href="style/AddInfoUser.css" rel="stylesheet" media="all">
+    <link href="style/AddInfoUser.css" rel="stylesheet" media="all" nonce="<%= nonce %>">
 </head>
 
 <body>

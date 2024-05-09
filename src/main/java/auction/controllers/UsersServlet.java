@@ -74,6 +74,7 @@ public class UsersServlet extends HttpServlet {
                     message = "This email address already exists.<br>" +
                             "Please enter another email address.";
                     url = "/RegisteringForm.jsp";
+                    return;
 
                 } else {
                     message = "Create new account succesfully, please login in";
@@ -99,34 +100,41 @@ public class UsersServlet extends HttpServlet {
                 String currentPassword = request.getParameter("password");
 
                 String message = "";
-                if (BuyerDB.checkPassword(currentEmail, currentPassword)) {
+                if(currentEmail.isEmpty() || currentPassword.isEmpty()){
+                    message = "Please enter email and password";
+                    request.setAttribute("message", message);
+                    url = "/LoginForm.jsp";
+                }
+                else {
+                    if (BuyerDB.checkPassword(currentEmail, currentPassword)) {
 
 
-                    Buyer currentBuyer = BuyerDB.selectUser(currentEmail);
-                    Seller currentSeller = SellerDB.selectUser(currentEmail);
+                        Buyer currentBuyer = BuyerDB.selectUser(currentEmail);
+                        Seller currentSeller = SellerDB.selectUser(currentEmail);
 
-                    //store current login succesfully to use
-                    session.setAttribute("buyer", currentBuyer);
-                    session.setAttribute("seller", currentSeller);
-                    //Load to main page
-                    if ("activate".equals(currentBuyer.getAccountStatus())) {
-                        message = "Login successfully";
-                        session.setAttribute("user", currentBuyer);
-                        //session.setAttribute("user", currentSeller);
-                        url = "/index.jsp";
+                        //store current login succesfully to use
+                        session.setAttribute("buyer", currentBuyer);
+                        session.setAttribute("seller", currentSeller);
+                        //Load to main page
+                        if ("activate".equals(currentBuyer.getAccountStatus())) {
+                            message = "Login successfully";
+                            session.setAttribute("user", currentBuyer);
+                            //session.setAttribute("user", currentSeller);
+                            url = "/index.jsp";
+
+
+                        } else {
+                            url = "/AddInfoUserForm.jsp";
+                        }
 
 
                     } else {
-                        url = "/AddInfoUserForm.jsp";
+                        message = "Wrong account or password, please try again";
+                        url = "/LoginForm.jsp";
                     }
 
-
-                } else {
-                    message = "Wrong account or password, please try again";
-                    url = "/LoginForm.jsp";
+                    request.setAttribute("message", message);
                 }
-
-                request.setAttribute("message", message);
 
             } else if (action.equals("logOut")) {
                 session.removeAttribute("user");

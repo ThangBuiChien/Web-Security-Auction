@@ -404,7 +404,9 @@ public class ProductServlet extends HttpServlet {
             
             url ="/receipt.jsp";
         }
-        
+        else{
+            url = "/customErr.jsp";
+        }
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);

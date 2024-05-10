@@ -37,32 +37,33 @@ import java.util.logging.Logger;
 public class ProductServlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(ProductServlet.class.getName());
+    HttpSession session = null;
 
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
+
+        response.setHeader("Content-Security-Policy", "default-src 'self';");
+
+        session = request.getSession();
 
         String url = "/index.jsp";
-        
+
         // get current action
         String action = request.getParameter("action");
         if (action == null) {
             action = "loadProduct";  // default action
         }
 
-        
-        
+
         try {
             if (action.equals("loadProduct")) {
                 String csrf = request.getParameter("csrfToken");
                 System.out.println("This is csrf token" + csrf);
-                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                if (csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))) {
                     System.out.println("This is valid csrf token " + csrf);
-                }
-                else{
+                } else {
                     session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
                 }
                 List<Product> loadProduct = ProductDB.selectBiddingProducts();
@@ -80,10 +81,9 @@ public class ProductServlet extends HttpServlet {
             } else if (action.equals("loadProductByName")) {
                 String csrf = request.getParameter("csrfToken");
                 System.out.println("This is csrf token" + csrf);
-                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                if (csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))) {
                     System.out.println("This is valid csrf token " + csrf);
-                }
-                else{
+                } else {
                     session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
                 }
                 String name = request.getParameter("productNameSearch");
@@ -108,10 +108,9 @@ public class ProductServlet extends HttpServlet {
             } else if (action.equals("loadProductByUser")) {
                 String csrf = request.getParameter("csrfToken");
                 System.out.println("This is csrf token" + csrf);
-                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                if (csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))) {
                     System.out.println("This is valid csrf token " + csrf);
-                }
-                else{
+                } else {
                     session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
                 }
                 Buyer currentUser = (Buyer) session.getAttribute("buyer");
@@ -127,10 +126,9 @@ public class ProductServlet extends HttpServlet {
             } else if (action.equals("addProduct")) {
                 String csrf = request.getParameter("csrfToken");
                 System.out.println("This is csrf token" + csrf);
-                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                if (csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))) {
                     System.out.println("This is valid csrf token " + csrf);
-                }
-                else{
+                } else {
                     session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
                 }
                 Product newProduct = new Product();
@@ -278,10 +276,9 @@ public class ProductServlet extends HttpServlet {
             } else if (action.equals("setBidPrice")) {
                 String csrf = request.getParameter("csrfToken");
                 System.out.println("This is csrf token" + csrf);
-                if(csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))){
+                if (csrf != null && csrf.equals((String) session.getAttribute("csrfToken"))) {
                     System.out.println("This is valid csrf token " + csrf);
-                }
-                else{
+                } else {
                     session.setAttribute("csrfToken", CsrfTokenManager.generateCsrfToken());
                 }
                 String strId = request.getParameter("productID");
@@ -408,7 +405,7 @@ public class ProductServlet extends HttpServlet {
             url = "/error.jsp"; // Redirect to error page
         }
 
-        
+
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);

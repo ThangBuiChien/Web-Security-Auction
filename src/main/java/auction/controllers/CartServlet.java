@@ -30,6 +30,8 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setHeader("Content-Security-Policy", "default-src 'self';");
+
         HttpSession session = request.getSession();
         String url = "/index.html";
 

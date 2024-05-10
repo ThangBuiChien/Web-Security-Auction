@@ -29,7 +29,9 @@ public class UsersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://example.com; style-src 'self' https://example.com;");
+
         HttpSession session = request.getSession();
 
         String url = "/index.jsp";

@@ -5,13 +5,43 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Base64" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.security.NoSuchAlgorithmException" %>
+
+<%
+    // Generate nonce
+    byte[] nonceBytes = new byte[16];
+    try {
+        SecureRandom.getInstanceStrong().nextBytes(nonceBytes);
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+    String nonce = Base64.getEncoder().encodeToString(nonceBytes);
+
+    // Define CSP with nonce and allowlist for CDNs
+    String cspString = "default-src 'self'; " +
+            "script-src 'self' 'nonce-" + nonce + "' https://code.jquery.com https://cdn.jsdelivr.net; " +
+            "style-src 'self' 'nonce-" + nonce + "' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " +
+            "img-src 'self'; " +
+            "frame-ancestors 'self'; " +
+            "form-action 'self';";
+    response.setHeader("Content-Security-Policy", cspString);
+    response.setHeader("X-Frame-Options", "SAMEORIGIN");
+%>
+
+<style nonce="<%= nonce %>">
+</style>
+
+<script nonce="<%= nonce %>">
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="style/main.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" nonce="<%= nonce %>">
+    <link rel="stylesheet" href="style/main.css" type="text/css" nonce="<%= nonce %>"/>
     <title>Invoice</title>
     <style>
         body {

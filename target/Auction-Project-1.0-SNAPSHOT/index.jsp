@@ -5,6 +5,37 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Base64" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.security.NoSuchAlgorithmException" %>
+
+<%
+    // Generate nonce
+    byte[] nonceBytes = new byte[16];
+    try {
+        SecureRandom.getInstanceStrong().nextBytes(nonceBytes);
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+    String nonce = Base64.getEncoder().encodeToString(nonceBytes);
+
+    // Define CSP with nonce and allowlist for CDNs
+    String cspString = "default-src 'self'; " +
+            "script-src 'self' 'nonce-" + nonce + "' https://code.jquery.com https://cdn.jsdelivr.net https://kit.fontawesome.com; " +
+            "style-src 'self' 'nonce-" + nonce + "' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; " +
+            "img-src 'self'; " +
+            "frame-ancestors 'self'; " +
+            "form-action 'self';";
+    response.setHeader("Content-Security-Policy", cspString);
+    response.setHeader("X-Frame-Options", "SAMEORIGIN");
+%>
+
+<style nonce="<%= nonce %>">
+</style>
+
+<script nonce="<%= nonce %>">
+</script>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,33 +44,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>TĐĐ'Auction Page</title>
     <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-Qrn3Yr9Llumin/avw6tPFMVWzpcMHGZQXHX1cVUSKj8bpp/AwdruCs+/WmDNyHxqNQrHDsZjrdochXH/ONaKJ +++" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" nonce="<%= nonce %>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-Qrn3Yr9Llumin/avw6tPFMVWzpcMHGZQXHX1cVUSKj8bpp/AwdruCs+/WmDNyHxqNQrHDsZjrdochXH/ONaKJ +++" crossorigin="anonymous" nonce="<%= nonce %>">
 
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-Qrn3Yr9Llumin/avw6tPFMVWzpcMHGZQXHX1cVUSKj8bpp/AwdruCs+/WmDNyHxqNQrHDsZjrdochXH/ONaKJ +++" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/a110f8f65c.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css" nonce="<%= nonce %>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-Qrn3Yr9Llumin/avw6tPFMVWzpcMHGZQXHX1cVUSKj8bpp/AwdruCs+/WmDNyHxqNQrHDsZjrdochXH/ONaKJ +++" crossorigin="anonymous" nonce="<%= nonce %>">
+    <script src="https://kit.fontawesome.com/a110f8f65c.js" crossorigin="anonymous" nonce="<%= nonce %>"></script>
 
-   <link rel="stylesheet" href="./style/Noti.css">
-    <link href="./style/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./style/Noti.css" nonce="<%= nonce %>">
+    <link href="./style/main.css" rel="stylesheet" type="text/css" nonce="<%= nonce %>">
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon" nonce="<%= nonce %>">
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+    <link rel="preconnect" href="https://fonts.googleapis.com" nonce="<%= nonce %>">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin nonce="<%= nonce %>">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet" nonce="<%= nonce %>">
 
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" nonce="<%= nonce %>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" nonce="<%= nonce %>">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet" nonce="<%= nonce %>">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" nonce="<%= nonce %>">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" nonce="<%= nonce %>">
 </head>
 <body>
 

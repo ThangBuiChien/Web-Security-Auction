@@ -34,7 +34,8 @@ public class URLFIlter implements Filter {
         // Check if the request URI or parameters contain suspicious SQL keywords
         if (isSQLInjectionAttempt(request) || hasBannedCharacters(request)) {
             // Block the request and return an error response or redirect to a safe page
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+            //response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+            response.sendRedirect(request.getContextPath() + "/bannedChars.jsp");
             return;
              // Stop further processing
         }filterChain.doFilter(servletRequest, servletResponse);

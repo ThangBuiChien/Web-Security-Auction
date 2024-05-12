@@ -124,7 +124,16 @@
         
         <input type="submit" value="Winning Product" class="margin_left">
     </form>
-</section>
+
+     <form action="demo" method="get">
+         <input type="hidden" name="action" value="demo_X_content">
+
+         <input type="submit" value="Click here to load the vulnerable X_content page" class="margin_left">
+     </form>
+
+<%--     <a href="${pageContext.request.contextPath}/0.demo_X.html">Click here to load the vulnerable page</a>--%>
+
+ </section>
     
     <script src="js/script.js"></script>
 

@@ -5,15 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Base64" %>
-<%@ page import="java.security.SecureRandom" %>
-<%@ page import="java.security.NoSuchAlgorithmException" %>
+<%@ page import="java.util.Base64" %> <!--imports the Base64 class from the java.util package-->
+<%@ page import="java.security.SecureRandom" %> <!--imports the SecureRandom class from the java.security package-->
+<%@ page import="java.security.NoSuchAlgorithmException" %> <!--imports the NoSuchAlgorithmException class from the java.security package-->
 
 <%
     // Generate nonce
-    byte[] nonceBytes = new byte[16];
+    byte[] nonceBytes = new byte[16]; //declares array nonceBytes 16 bytes, store the generated nonce value
     try {
-        SecureRandom.getInstanceStrong().nextBytes(nonceBytes);
+        SecureRandom.getInstanceStrong().nextBytes(nonceBytes); //generate random bytes and fills the nonceBytes array with those bytes
     } catch (NoSuchAlgorithmException e) {
         throw new RuntimeException(e);
     }
@@ -21,16 +21,16 @@
 
     // Define CSP with nonce and allowlist for CDNs
     String cspString = "default-src 'self'; " +
-            "script-src 'self' 'nonce-" + nonce + "' https://code.jquery.com https://cdn.jsdelivr.net; " +
+        "script-src 'self' 'nonce-" + nonce + "' https://code.jquery.com https://cdn.jsdelivr.net; " +
             "style-src 'self' 'nonce-" + nonce + "' https://cdn.jsdelivr.net; " +
             "img-src 'self'; " +
             "frame-ancestors 'self'; " +
-            "form-action 'self';";
-    response.setHeader("Content-Security-Policy", cspString);
-    response.setHeader("X-Frame-Options", "SAMEORIGIN");
+            "form-action 'self';"; //defines the security policies for the page
+    response.setHeader("Content-Security-Policy", cspString); //informs the browser about the content security policies to enforce for the page.
+    response.setHeader("X-Frame-Options", "SAMEORIGIN"); //Permits framing from same origin
 %>
 
-<style nonce="<%= nonce %>">
+<style nonce="<%= nonce %>"> /* nonce value is used to associate the tags with the corresponding CSP policy */
 </style>
 
 <script nonce="<%= nonce %>">

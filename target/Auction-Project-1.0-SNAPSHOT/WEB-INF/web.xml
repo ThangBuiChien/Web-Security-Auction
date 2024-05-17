@@ -30,5 +30,16 @@
         <filter-name>URLFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <servlet>
+        <servlet-name>XSLTServlet</servlet-name>
+        <servlet-class>auction.config.XSLTServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>XSLTServlet</servlet-name>
+        <url-pattern>/xslt</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

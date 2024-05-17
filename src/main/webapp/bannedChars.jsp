@@ -22,7 +22,7 @@
             "frame-ancestors 'self'; " +
             "form-action 'self';";
     response.setHeader("Content-Security-Policy", cspString);
-    response.setHeader("X-Frame-Options", "SAMEORIGIN");
+    response.setHeader("X-Frame-Options", "SAME-ORIGIN");
 %>
 
 <style nonce="<%= nonce %>">

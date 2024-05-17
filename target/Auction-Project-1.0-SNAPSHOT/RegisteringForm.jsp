@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="password" value="${user.Password}">
+                        <input type="password" class="form-control" name="password" value="${user.password}">
                     </div>
                     <button type="submit" class="btn btn-black">Join Now</button>
                 </div>

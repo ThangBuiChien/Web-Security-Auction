@@ -19,7 +19,7 @@ import javax.servlet.annotation.WebFilter;
 public class URLFIlter implements Filter {
     private static final Pattern SQL_INJECTION_PATTERN = Pattern.compile(".*(\\bunion\\b|\\bselect\\b|\\binsert\\b|\\bdelete\\b|\\bupdate\\b).*", Pattern.CASE_INSENSITIVE);
     private static final Pattern BANNED_CHARACTERS_PATTERN = Pattern.compile("[<>'\";\\s+]");
-    //private static final Pattern BANNED_CHARACTERS_PATTERN = Pattern.compile("@");
+    
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
